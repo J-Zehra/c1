@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { Box } from '@chakra-ui/react'
+import React from 'react'
 
-function App() {
+import { Contact } from './pages/contact/Contact';
+import { Projects } from './pages/projects/Projects';
+
+import '@fontsource/dm-sans'
+import '@fontsource/rubik'
+import '@fontsource/montserrat'
+import '@fontsource/montserrat/700.css'
+import '@fontsource/montserrat/500.css'
+
+import { Nav } from './components/Nav';
+import { Home } from './pages/home/Home';
+import { About } from './pages/about/About';
+import { Footer } from './components/Footer';
+
+export const App = () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Box
+      position='relative'
+    >
+      <Nav/>
+      <Home/>
+      <About/>
+      <Projects/>
+      <Contact/>
+      <Footer/>
+    </Box>
+  )
 }
-
-export default App;
