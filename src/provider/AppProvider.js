@@ -5,7 +5,7 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
 
-    const [isTablet, isDesktop] = useMediaQuery(['(min-width: 720px)', '(min-width: 1000px)']);
+    const [isTablet, isDesktop] = useMediaQuery(['(min-width: 720px)', '(min-width: 1280px)']);
 
     const [hovered, setHovered] = useState(false);
     const [isHovered, setIsHovered] = useState(false);

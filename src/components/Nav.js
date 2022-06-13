@@ -57,8 +57,6 @@ export const Nav = () => {
             h='5rem'
             w='100%'
             top='0'
-            padding='2rem'
-            paddingInline={isTablet ? '10rem' : ''}
             zIndex='999'
             justifyContent={isTablet ? 'space-around' : 'space-between'}
             alignItems='center'

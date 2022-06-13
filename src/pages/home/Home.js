@@ -69,7 +69,7 @@ export const Home = () => {
         <Flex
             ref={ref}
             pos= 'relative'
-            paddingInline= {isDesktop ? '25rem' : isTablet ? '2.5rem' : '1.5rem'}
+            paddingInline= {isDesktop ? '20%' : isTablet ? '5%' : '1.5rem'}
             paddingBottom={isDesktop && isTablet ? '' : '2rem'}
             height= '100vh'
             justifyContent= 'center'

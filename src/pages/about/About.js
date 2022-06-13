@@ -80,7 +80,7 @@ export const About = () => {
             flexDir='column'
             alignItems='center'
             justifyContent='center'
-            paddingInline= {isDesktop ? '25rem' : isTablet ? '2.5rem' : '1.5rem'}
+            paddingInline= {isDesktop ? '20%' : isTablet ? '5%' : '1.5rem'}
             bgGradient= {isDarkMode ? '' : 'linear-gradient(to top right, appColor.600, appColor.900, appColor.900);'}
             bg={isDarkMode ? 'appColor.100': ''}
         >
