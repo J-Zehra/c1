@@ -68,11 +68,21 @@ export const Nav = () => {
             whileInView='show'
             viewport={{ once: true }}
         >
-            <Avatar 
-                name='G H' 
-                size='md'
-                src={avatarUrl}
-            />
+            <Link
+                href='#home'
+
+                _focus={{
+                    outline: 'none'
+                }}
+            >
+                <Avatar 
+                    cursor='pointer'
+                    name='G H' 
+                    size='md'
+                    src={avatarUrl}
+
+                />
+            </Link>
             <HStack spacing='4.5rem'>
                 {isTablet ? (
                     NavRoutes.map((route, index) => {
