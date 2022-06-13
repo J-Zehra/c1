@@ -55,7 +55,27 @@ export const Projects = () => {
         const fetchData = async() => {
             await fetch('https://api.github.com/users/gmhislop/repos')
             .then((res) => res.json())
-            .then(result => setProjectList(result))
+            .then(result => {
+
+                let swapped = true;
+                do {
+                    swapped = false;
+                    for (let j = 0; j < result.length; j++) {
+                        if (result[j]?.stargazers_count < result[j + 1]?.stargazers_count) {
+                            let temp = result[j];
+                            result[j] = result[j + 1];
+                            result[j + 1] = temp;
+                            swapped = true; 
+                        }   
+                    }
+                } while (swapped);
+
+                const limitedResult = result.filter((item, index) => {
+                    if(index < 8) return item;
+                })
+            
+                setProjectList(limitedResult);
+            })
             .catch(error => console.log(error))
         }
 
