@@ -1,15 +1,11 @@
 import React from 'react'
-import { HStack, IconButton, Link, Stack, VStack } from '@chakra-ui/react'
-
+import {Link, Stack } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
-
 import { AiFillGithub } from 'react-icons/ai'
-import { BsFacebook } from 'react-icons/bs'
 import { AiOutlineTwitter } from 'react-icons/ai'
 import { AiFillLinkedin } from 'react-icons/ai'
-import { AiFillInstagram } from 'react-icons/ai'
+import { FaStackOverflow } from 'react-icons/fa'
 import { AppState } from '../provider/AppProvider'
-
 
 const container = {
     hidden: { opacity: 0 },
@@ -26,53 +22,62 @@ const item = {
     show: { opacity: 1 }
 }
 
-
-
 export const Socials = () => {
 
-    const { isTablet, isDesktop } = AppState();
+    // GET THE VARIABLES FROM THE PROVIDER
+    const { 
+        isTablet, 
+        isDesktop, 
+        isDarkMode 
+    } = AppState();
 
+    // INITIALIZE LIST OF SOCIAL ICONS AND LINKS
     const iconList = [
-        <AiFillGithub/>,
-        <BsFacebook/>,
-        <AiOutlineTwitter/>,
-        <AiFillLinkedin/>,
-        <AiFillInstagram/>
+        { icons: <AiFillGithub/>, link: 'https://github.com/gmhislop'},
+        { icons: <AiFillLinkedin/>, link: 'https://www.linkedin.com/in/giovanni-hislop' },
+        { icons: <FaStackOverflow/>, link: 'https://stackoverflow.com/users/18814526/giovanni-hislop' },
+        { icons: <AiOutlineTwitter/>, link: 'https://twitter.com/giovannihislop' },
     ]
 
     return (
         <Stack
             direction={isTablet ? 'column' : 'row'}
             pos={isTablet ? 'fixed' : 'absolute'}
+            display='flex'
+            justifyContent='center'
+            alignItems={isDesktop ? 'center' : 'end'}
             bottom='0'
+            margin='auto'
+            h={isTablet? '100%' : ''}
             left={isTablet ? '0' : '50%'}
-            padding={isDesktop ? '5rem' : isTablet ? '2rem' : '2rem'}
-            spacing='1.2rem'
+            paddingLeft={isTablet ? '2rem' : ''}
+            spacing='1.8rem'
             alignSelf='start'
             marginTop={isTablet ? '' : '3.5rem'}
             transform={isTablet ? '' : 'translate(-50%)'}
-            
             as={motion.div}
-
             variants={container}
             initial='hidden'
             whileInView='show'
-
         >
-            {iconList.map((icon, index) => {
+            {iconList.map((social, index) => {
                 return(
                     <Link
                         variants={item}
                         key={index}
-                        as={motion.div}
+                        as={motion.a}
                         whileHover={{
                             scale: 1.1
                         }}
-    
-                        color='appColor.100'
+                        _focus={{
+                            outline: 'none'
+                        }}
+                        href={social.link}
+                        color={isDarkMode ? 'appColor.400' : 'appColor.100'}
                         fontSize='1.2rem'
+                        isExternal
                     >
-                        {icon}
+                        {social.icons}
                     </Link>
                 )
             })}

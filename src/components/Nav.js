@@ -1,8 +1,9 @@
-import { Box, Flex, HStack, IconButton, Link, Menu, MenuButton } from '@chakra-ui/react'
+import { Avatar, Box, Flex, HStack, IconButton, Link, Menu, MenuButton, Switch, VStack } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { GiHamburgerMenu } from 'react-icons/gi'
+import { CgDarkMode } from 'react-icons/cg'
 import { AppState } from '../provider/AppProvider'
 import { motion } from 'framer-motion'
 
@@ -22,14 +23,17 @@ const item = {
     show: { opacity: 1 }
 }
 
-
-
 export const Nav = () => {
 
-    const {isTablet} = AppState();
+    // GET THE VARIABLES FROM THE PROVIDER
+    const {
+        isTablet,
+        setIsHovered,  
+        isDarkMode, 
+        setIsDarkMode
+    } = AppState();
 
-    const [active, setActive] = useState(0);
-
+    // INITIALIZE ROUTES TO MAP
     const NavRoutes = [
         {id: '#home', label: 'Home'},
         {id: '#about', label: 'About'},
@@ -39,60 +43,65 @@ export const Nav = () => {
 
     return (
         <Flex
-            pos='absolute'
+            pos='fixed'
+            opacity='.8'
             h='5rem'
             w='100%'
             top='0'
             padding='2rem'
-            paddingInlineEnd={isTablet ? '10rem' : ''}
+            paddingInline={isTablet ? '10rem' : ''}
             zIndex='999'
-            justifyContent='flex-end'
+            justifyContent={isTablet ? 'space-around' : 'space-between'}
+            alignItems='center'
             gap={isTablet ? '2rem' : ''}
             fontWeight={isTablet ? 'semibold' : ''}
-
             as={motion.div}
-
             variants={container}
             initial='hidden'
             whileInView='show'
+            viewport={{ once: true }}
         >
-            {isTablet ? (
-                NavRoutes.map((route, index) => {
-                    return(
-                        <Link
-                            as={motion.a}
-                            whileHover={{
-                                scale: 1.1,
-                                rotate: -2
-                            }}
-
-                            key={index}
-                            href={route.id}
-
-                            _hover={{
-                                outline: 'none'
-                            }}
-
-                            _focus={{
-                                outline: 'none'
-                            }}
-
-                            variants={item}
-                        >
-                            {route.label}
-                        </Link>
-                    )
-                })
-            ) : (
-                <Menu>
-                    <MenuButton
-                        as={IconButton}
-                        bg='appColor.900'
-                        color='appColor.100'
-                        icon={<GiHamburgerMenu/>}
+            <Avatar 
+                name='G H' 
+                size='md'
+            />
+            <HStack spacing='4.5rem'>
+                {isTablet ? (
+                    NavRoutes.map((route, index) => {
+                        return(
+                            <Link
+                                onMouseOver={() => setIsHovered(true)}
+                                onMouseOut={() => setIsHovered(false)}
+                                color={isDarkMode ? 'appColor.400' : 'appColor.100'}
+                                as={motion.a}
+                                whileHover={{
+                                    scale: 1.1,
+                                    rotate: -2
+                                }}
+                                key={index}
+                                href={route.id}
+                                _hover={{
+                                    outline: 'none'
+                                }}
+                                _focus={{
+                                    outline: 'none'
+                                }}
+                                variants={item}
+                            >
+                                {route.label}
+                            </Link>
+                        )
+                    })
+                ) : ''}
+                    <Switch
+                        size='lg'
+                        color={isDarkMode ? '#cdc9c3' : '#555555'}
+                        onMouseOver={() => setIsHovered(true)}
+                        onMouseOut={() => setIsHovered(false)}
+                        onChange={() => setIsDarkMode(!isDarkMode)}
+                        colorScheme='gray'
                     />
-                </Menu>
-            )}
+            </HStack>
         </Flex>
     )
 }

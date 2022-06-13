@@ -1,72 +1,50 @@
 
 *{
-    margin: 0;
-    padding: 0;
-    text-decoration: none;
-    list-style: none;
-    scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+  scroll-behavior: smooth;
+  cursor: default;
 }
 
 body .activeLink{
-    position: relative;
+  position: relative;
 }
 
 body .activeLink::after {
-    content: '';
-    width: 8px;
-    height: 8px;
-    background: #AEFEFF;
-    position: absolute;
-    border-radius: 50%;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: #AEFEFF;
+  position: absolute;
+  border-radius: 50%;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
+  display: none;
 }
 
-  /* Track */
+/* Track */
 ::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }
 
-  /* Handle */
+/* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #555555;
-    border-radius: 5rem;
+  background: #555555;
+  border-radius: 5rem;
 }
 
-  /* Handle on hover */
+/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555555;
+  background: #555555;
 }
 
-.eyes{
-    position: relative;
-    top: -40px;
-    display: flex;
-}
-
-#contact .eye{
-    position: relative;
-    width: 80px;
-    height: 80px;
-    display: block;
-    background: transparent;
-    margin: 0 15px;
-    
-}
-
-#contact .eye::before{
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 25px;
-    transform: translate(-50%, -50%);
-    width: 40px;
-    height: 40px;
-    background: black;
-    border-radius: 50%;
+::placeholder {
+  color: #555555;
+  opacity: .5; 
 }

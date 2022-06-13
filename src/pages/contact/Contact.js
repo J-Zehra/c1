@@ -1,63 +1,85 @@
-import { Box, Button, Container, Flex, FormControl, FormLabel, HStack, Input, Stack, Text, Textarea, VStack } from '@chakra-ui/react'
 import React, { useEffect, useState, useRef } from 'react'
-
-import Lottie from 'react-lottie'
-import animationData from '../../animatiions/contactAnimation.json'
-
+import { 
+    Box, 
+    Button,
+    Flex, 
+    FormControl, 
+    Input, 
+    Text, 
+    Textarea, 
+    VStack, 
+    useToast 
+} from '@chakra-ui/react'
+import { useInView } from 'react-intersection-observer'
 import { AppState } from '../../provider/AppProvider'
-
 import { AvatarHappy } from '../../assets/avatar/AvatarHappy'
 import { motion } from 'framer-motion'
-
 import emailjs from '@emailjs/browser'
-import { useToast } from '@chakra-ui/react'
 
 export const Contact = () => {
 
-    const defaultOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: animationData,
-        rendererSettings: {
-            preserveAspectRatio: "xMidYMid slice"
+    // USE IN VIEW HOOK TO KEEP TRACK OF ON THE ELEMENT IN THE CURRENT VIEWPORT
+    const { ref, inView} = useInView({ threshold: 0.8 })
+    
+    // GET THE VARIABLES FROM THE PROVIDER
+    const { 
+        isTablet, 
+        isDesktop, 
+        setHovered, 
+        setIsTyping, 
+        setPageInView, 
+        isDarkMode 
+    } = AppState();
+
+    // SET THE CURRENT PAGE IN VIEW AS THIS PAGE WHENEVER THE IN VIEW VARIABLE IS TRUE    
+    useEffect(() => {
+        if(inView){
+            setPageInView(3);
         }
-    };
+    }, [inView])
 
-    const { isTablet, isDesktop, setHovered, setIsTyping } = AppState();
-
+    // INITIALIZE VARIABLES RELATED TO THE MOUSE MOVEMENT
     const endX = window.innerWidth / 1.5
     const endY = window.innerHeight / 2
     const [rotation, setRotation] = useState();
 
-
+    // HANDLE MOUSE MOVEMENT
     const mouseMoveEvent = e => {
-
         let radian = Math.atan2(e.clientX - endX, e.clientY - endY);
         let rotation = (radian * (180 / Math.PI) * -1) + 270;
-
         setRotation(rotation);
     }
 
+    // KEEP TRACK OF MOUSE MOVE AND THE CURRENT POSITION
     useEffect(() => {
         document.addEventListener('mousemove', mouseMoveEvent);
     }, [])
 
-
+    // VARIABLES FOR THE CONTACT
     const [name, setName] = useState();
     const [email, setEmail] = useState();
     const [message, setMessage] = useState();
     const [loading, setLoading] = useState(false);
     const toast = useToast();
 
+    // HANDLE SEND EMAIL
     const sendEmail = () => {
+        if(!name || !email || !message){
+            toast({
+                title: 'Message not sent.',
+                description: "Please fill all the fields",
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+            })
+            return;
+        }
         setLoading(true);
-
         var templateParams = {
             name,
             email,
             message
         };
-
         emailjs.send('service_v4yjrar', 'template_edpfeti', templateParams, 's4i9jk7PO-pMqAN4h')
         .then((result) => {
             console.log(result.text);
@@ -79,27 +101,28 @@ export const Contact = () => {
 
     return (
         <Flex
+            ref={ref}
             id='contact'
             gap='10rem'
             justifyContent='center'
             flexDir='column'
             alignItems='start'
             paddingInline= {isDesktop ? '25rem' : isTablet ? '2.5rem' : '1.5rem'}
-            bgGradient='linear-gradient(to top right, appColor.600, appColor.900, appColor.900);'
+            bgGradient= {isDarkMode ? '' : 'linear-gradient(to top right, appColor.600, appColor.900, appColor.900);'}
+            bg={isDarkMode ? 'appColor.100': ''}
         >
             <Text
                 marginTop='5rem'
                 fontSize={isDesktop ? '2xl' : isTablet ? 'xl' : 'lg'}
                 fontWeight='semibold'
                 alignSelf='center'
-                color='appColor.100'
+                color={isDarkMode ? 'appColor.400' : 'appColor.100'}
                 as={motion.div}
-
+                textAlign='center'
                 initial={{
                     opacity: 0,
                     y: -30
                 }}
-
                 whileInView={{
                     opacity: 1,
                     y: 0,
@@ -108,23 +131,29 @@ export const Contact = () => {
                         ease: 'easeInOut'
                     }
                 }}
+                viewport={{ once: true }}
             >
                 Are you interested in my works?
+                {isTablet && (
+                    <Text 
+                        marginTop='1rem'
+                        fontSize={isTablet ? 'lg' : 'sm'}
+                        fontWeight='medium'
+                    >
+                        I'm open to collaborating on Blockchain and Mobile app development.
+                    </Text>
+                )}
             </Text>
-
             <Flex
                 width='100%'
-                justifyContent='space-between'
+                justifyContent='center'
                 alignItems='center'
                 gap='2rem'
-
                 as={motion.div}
-
                 initial={{
                     opacity: 0,
                     y: -30
                 }}
-
                 whileInView={{
                     opacity: 1,
                     y: 0,
@@ -133,43 +162,18 @@ export const Contact = () => {
                         ease: 'easeInOut'
                     }
                 }}
+                viewport={{ once: true }}
             >
-                {isTablet && (
-                    <Box
-                    as={motion.div}
-
-                    initial={{
-                        scale: 1,
-                    }}
-                    whileHover={{
-                        transition: {
-                            type: 'tween',
-                            duration: 2,
-                            ease: 'easeInOut'
-                        },
-                        scale: 1.2,
-                    }}
-                >
-                <Lottie 
-                        options={defaultOptions}
-                        width={isDesktop ? '35rem' : isTablet ? '20rem' : ''}
-                        height={isDesktop ? '35rem' : isTablet ? '20rem' : ''}
-                />
-                </Box>
-
-                )}
-
                 <VStack
                     pos='relative'
                     borderRadius='1rem'
-                    bg='appColor.900'
+                    bg={isDarkMode ? 'appColor.400' : 'appColor.900'}
                     p={isDesktop ? '3rem 4rem' : isTablet ? '2rem 3rem' : '2rem 1.3rem'}
                     alignSelf='center'
                     align='start'
                     spacing='3rem'
-                    boxShadow='2px 2px 20px #cdc9c3'
-                    w={isTablet ? '30rem' : '100%' }
-
+                    boxShadow={isDarkMode ? '3px 2px 20px #303030' : '2px 2px 20px #cdc9c3'}
+                    w={isTablet ? '35rem' : '100%' }
                 >
                     <Flex
                         justifyContent='space-between'
@@ -192,7 +196,6 @@ export const Contact = () => {
                                 Let's work together.
                             </Text>
                         </Box>
-
                         <AvatarHappy rotation={rotation} endX={endX} endY={endY}/>
                     </Flex>
                     <FormControl
@@ -210,8 +213,13 @@ export const Contact = () => {
                                 _focus={{
                                     outline:'none'
                                 }}
+                                _hover={{
+                                    outline: 'none'
+                                }}
+                                _placeholder={{
+                                    color: isDarkMode ? 'appColor.100' : ''
+                                }}
                                 name='name'
-
                                 onChange={e => setName(e.target.value)}
                                 value={name}
                             />
@@ -227,8 +235,13 @@ export const Contact = () => {
                                 _focus={{
                                     outline:'none'
                                 }}
+                                _placeholder={{
+                                    color: isDarkMode ? 'appColor.100' : ''
+                                }}
+                                _hover={{
+                                    outline: 'none'
+                                }}
                                 name='email'
-
                                 onChange={e => setEmail(e.target.value)}
                                 value={email}
                             />
@@ -245,8 +258,13 @@ export const Contact = () => {
                                 _focus={{
                                     outline:'none'
                                 }}
+                                _hover={{
+                                    outline: 'none'
+                                }}
+                                _placeholder={{
+                                    color: isDarkMode ? 'appColor.100' : ''
+                                }}
                                 name='message'
-
                                 onChange={e => setMessage(e.target.value)}
                                 value={message}
                             />
@@ -257,25 +275,20 @@ export const Contact = () => {
                                 color='appColor.600'
                                 p='1.5rem'
                                 marginTop='2rem'
-
                                 whileHover={{
                                     scale: 1.05
                                 }}
-
                                 _hover={{
                                     bg: 'appColor.100'
                                 }}
-
                                 onMouseOver={() => setHovered(true)}
                                 onMouseOut={() => setHovered(false)}
-
                                 onClick={sendEmail}
                                 isLoading={loading}
                             >
                                 Send message
                             </Button>
                         </VStack>
-                        
                     </FormControl>
                 </VStack>
             </Flex>

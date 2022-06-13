@@ -1,6 +1,5 @@
-import { Box } from '@chakra-ui/react'
 import React from 'react'
-
+import { Box, ChakraProvider } from '@chakra-ui/react'
 import { Contact } from './pages/contact/Contact';
 import { Projects } from './pages/projects/Projects';
 
@@ -14,19 +13,25 @@ import { Nav } from './components/Nav';
 import { Home } from './pages/home/Home';
 import { About } from './pages/about/About';
 import { Footer } from './components/Footer';
+import { Indicator } from './components/Indicator';
+import { AppProvider } from './provider/AppProvider';
+import { GreenTheme } from './misc/theme';
 
 export const App = () => {
 
   return (
-    <Box
-      position='relative'
-    >
-      <Nav/>
-      <Home/>
-      <About/>
-      <Projects/>
-      <Contact/>
-      <Footer/>
-    </Box>
+    <AppProvider>
+      <ChakraProvider theme={ GreenTheme }>
+        <Box position='relative'>
+          <Indicator/>
+          <Nav/>
+          <Home/>
+          <About/>
+          <Projects/>
+          <Contact/>
+          <Footer/>
+        </Box>
+      </ChakraProvider>
+    </AppProvider>
   )
 }

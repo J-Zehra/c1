@@ -9,9 +9,15 @@ const colors = {
     }
 }
 
+const darkMode = {
+    appColor: {
+        100: '#fbf7f0'
+    }
+}
+
 const fonts = {
     heading: 'Rubik',
     body: 'Montserrat'
 }
 
-export const GreenTheme = extendTheme({ colors , fonts});
+export const GreenTheme = extendTheme({ colors, fonts});
