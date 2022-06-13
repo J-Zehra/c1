@@ -54,15 +54,15 @@ export const About = () => {
 
     // INITIALIZE A LIST OF THE SKILLS TO DISPLAY
     const stackList = [
-        { icon: <DiJavascript1/>, label: 'Javascript'},
-        { icon: <TbCSharp/>, label: 'C#'},
-        { icon: <GrReactjs/>, label: 'React JS'},
-        { icon: <GrHtml5/>, label: 'HTML 5'},
-        { icon: <DiCss3Full/>, label: 'CSS 3'},
-        { icon: <DiDotnet/>, label: '.NET'},
-        { icon: <DiPhotoshop/>, label: 'Photoshop'},
-        { icon: <FaFigma/>, label: 'Figma'},
-        { icon: <GrNode/>, label: 'Node JS'},
+        { icon: <DiJavascript1/>, label: 'Javascript', color: '#d1cc82'},
+        { icon: <TbCSharp/>, label: 'C#', color: '#5b2994'},
+        { icon: <GrReactjs/>, label: 'React JS', color: '#2b82ad'},
+        { icon: <GrHtml5/>, label: 'HTML 5', color: '#ad642b'},
+        { icon: <DiCss3Full/>, label: 'CSS 3', color: '#2b3dad'},
+        { icon: <DiDotnet/>, label: '.NET', color: '#14248f'},
+        { icon: <DiPhotoshop/>, label: 'Photoshop', color: '#14018f'},
+        { icon: <FaFigma/>, label: 'Figma', color: '#77018f'},
+        { icon: <GrNode/>, label: 'Node JS', color: '#018f4f'},
     ]
 
     // SET THE CURRENT PAGE IN VIEW AS THIS PAGE WHENEVER THE IN VIEW VARIABLE IS TRUE    
@@ -165,6 +165,10 @@ export const About = () => {
                                         justifyContent='center'
                                         alignItems='center'
                                         borderRadius='.5rem'
+                                        as={motion.div}
+                                        whileHover={{
+                                            backgroundColor:stack.color
+                                        }}
                                     >
                                         <Box fontSize='1.5rem'>
                                             {stack.icon}

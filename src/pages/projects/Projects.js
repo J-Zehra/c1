@@ -1,17 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { 
     Flex, 
     HStack, 
     Text, 
+    VStack, 
     Wrap, 
     WrapItem 
 } from '@chakra-ui/react'
 import { AppState } from '../../provider/AppProvider'
 import { useInView } from 'react-intersection-observer'
 import  { AiFillFolder } from 'react-icons/ai'
-import  { AiFillHtml5 } from 'react-icons/ai'
-import  { DiCss3 } from 'react-icons/di'
-import  { DiJavascript } from 'react-icons/di'
 import { motion } from 'framer-motion'
 
 // VARIANTS TO MAKE A STAGGERED CHILDREN
@@ -44,19 +42,27 @@ export const Projects = () => {
     } = AppState();
 
     // SAMPLE PROJECTS TO RENDER
-    const projectList = [
-        { project: '1' },
-        { project: '2' },
-        { project: '3' },
-        { project: '4' },
-    ]
+    const [projectList, setProjectList] = useState([]);
 
     // SET THE CURRENT PAGE IN VIEW AS THIS PAGE WHENEVER THE IN VIEW VARIABLE IS TRUE
     useEffect(() => {
         if(inView){
             setPageInView(2);
         }
-    }, [inView])
+    }, [inView, setPageInView])
+
+    useEffect(() => {
+        const fetchData = async() => {
+            await fetch('https://api.github.com/users/gmhislop/repos')
+            .then((res) => res.json())
+            .then(result => setProjectList(result))
+            .catch(error => console.log(error))
+        }
+
+        fetchData();
+    }, [])
+
+    console.log(projectList);
 
     return (
         <Flex
@@ -130,35 +136,40 @@ export const Projects = () => {
                                 p='2rem'
                                 flexDir='column'
                                 borderRadius='1rem'
+                                justifyContent='space-between'
                             >   
-                                <AiFillFolder 
-                                    fontSize='2.5rem'
-                                    color='#555555'
-                                />
-                                <Text
-                                    marginTop='1rem'
-                                    fontWeight='semibold'
-                                    fontSize='lg'
-                                    color='appColor.100'
-                                >
-                                    Project Name
-                                </Text>
-                                <Text
-                                    fontWeight='medium'
-                                    fontSize='sm'
-                                    color='appColor.100'
-                                >
-                                    Lorem ipsum Lorem ipsum dolor sit amet. dolor, sit amet consectetur adipisicing elit. Autem, labore?
-                                </Text>
+                                <VStack align='stretch'>
+                                    <AiFillFolder 
+                                        fontSize='2.5rem'
+                                        color='#555555'
+                                    />
+                                    <Text
+                                        marginTop='1rem'
+                                        fontWeight='semibold'
+                                        fontSize='md'
+                                        color='appColor.100'
+                                    >
+                                        {project.name}
+                                    </Text>
+                                    <Text
+                                        fontWeight='medium'
+                                        fontSize='.9rem'
+                                        color='appColor.100'
+                                    >
+                                        {project.description}
+                                    </Text>
+                                </VStack>
                                 <HStack
                                     spacing='1rem'
                                     color='appColor.100'
                                     marginTop='1rem'
                                     fontSize='1.2rem'
                                 >
-                                    <AiFillHtml5/>
-                                    <DiCss3/>
-                                    <DiJavascript/>
+                                    <Text
+                                        fontSize='.7rem'
+                                    >
+                                        {project.language}
+                                    </Text>
                                 </HStack>
                             </Flex>
                         </WrapItem>

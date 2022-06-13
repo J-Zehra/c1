@@ -1,5 +1,5 @@
 import { Avatar, Flex, HStack, Link, Switch } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AppState } from '../provider/AppProvider'
 import { motion } from 'framer-motion'
 
@@ -37,6 +37,19 @@ export const Nav = () => {
         {id: '#contact', label: 'Contact'}
     ];
 
+    const [avatarUrl, setAvatarUrl] = useState();
+
+    useEffect(() => {
+        const fetchData = async() => {
+            await fetch('https://api.github.com/users/gmhislop')
+            .then((res) => res.json())
+            .then(result => setAvatarUrl(result.avatar_url))
+            .catch(error => console.log(error))
+        }
+
+        fetchData();
+    }, [])
+
     return (
         <Flex
             pos='fixed'
@@ -60,6 +73,7 @@ export const Nav = () => {
             <Avatar 
                 name='G H' 
                 size='md'
+                src={avatarUrl}
             />
             <HStack spacing='4.5rem'>
                 {isTablet ? (
