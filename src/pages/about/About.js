@@ -85,7 +85,7 @@ export const About = () => {
             bg={isDarkMode ? 'appColor.100': ''}
         >
             <Text
-                marginTop='2rem'
+                marginTop='10rem'
                 fontSize={isTablet ? '2xl' : 'xl'}
                 fontWeight='bold'
                 alignSelf='center'

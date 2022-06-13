@@ -112,7 +112,7 @@ export const Contact = () => {
             bg={isDarkMode ? 'appColor.100': ''}
         >
             <Text
-                marginTop='5rem'
+                marginTop='20rem'
                 fontSize={isDesktop ? '2xl' : isTablet ? 'xl' : 'lg'}
                 fontWeight='semibold'
                 alignSelf='center'

@@ -77,7 +77,7 @@ export const Projects = () => {
             bg={isDarkMode ? 'appColor.100': ''}
         >
             <Text
-                marginTop='12rem'
+                marginTop='20rem'
                 fontSize={isTablet ? '2xl' : 'xl'}
                 fontWeight='bold'
                 alignSelf='center'
