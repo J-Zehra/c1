@@ -1,9 +1,5 @@
-import { Avatar, Box, Flex, HStack, IconButton, Link, Menu, MenuButton, Switch, VStack } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-
-import { GiHamburgerMenu } from 'react-icons/gi'
-import { CgDarkMode } from 'react-icons/cg'
+import { Avatar, Flex, HStack, Link, Switch } from '@chakra-ui/react'
+import React from 'react'
 import { AppState } from '../provider/AppProvider'
 import { motion } from 'framer-motion'
 

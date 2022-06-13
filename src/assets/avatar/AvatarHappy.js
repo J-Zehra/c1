@@ -3,7 +3,6 @@ import { Box } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { AppState } from "../../provider/AppProvider";
 
-
 export const AvatarHappy = ({ rotation }) => {
 
     const { hovered, setIsHovered } = AppState()

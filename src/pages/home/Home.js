@@ -3,7 +3,6 @@ import {
     Box, 
     Button, 
     Flex, 
-    Image, 
     Spacer, 
     Text, 
     VStack, 
@@ -16,7 +15,7 @@ import { Socials } from '../../components/Socials';
 import { AppState } from '../../provider/AppProvider';
 import { AvatarSmiling } from '../../assets/avatar/AvatarSmiling';
 import { motion } from 'framer-motion';
-import { mouseMoveEvent } from '../../misc/mouseMove';
+
 import { MouseEffect } from '../../components/MouseEffect';
 
 export const Home = () => {
@@ -36,9 +35,6 @@ export const Home = () => {
         setIsHovered, 
         isDarkMode 
     } = AppState();
-    
-    // INITIALIZE A VARIABLE TO STORE THE NEEDED ROTATION OF THE EMOJI'S EYE BALL
-    const [rotation, setRotation] = useState();
 
     // INITIALIZE AN ARRAY OF INDIVIDUAL LETTER TO ATTACH A HANDLER IN EACH ONE
     const tagline1 = ['M', 'a', 'k', 'e']
@@ -52,11 +48,21 @@ export const Home = () => {
         if(inView){
             setPageInView(0);
         }
-    }, [inView])
+    }, [inView, setPageInView])
 
-    // KEEP TRACK OF MOUSE MOVE AND THE CURRENT POSITION
+     // INITIALIZE VARIABLES RELATED TO THE MOUSE MOVEMENT
+    const [rotation, setRotation] = useState();
+
+     // HANDLE MOUSE MOVEMENT
+    const mouseMoveEvent = e => {
+        let radian = Math.atan2(e.clientX - posRef.current.offsetLeft, e.clientY - posRef.current.offsetTop);
+         let rotation = (radian * (180 / Math.PI) * -1) + 270;
+        setRotation(rotation);
+    }
+
+     // KEEP TRACK OF MOUSE MOVE AND THE CURRENT POSITION
     useEffect(() => {
-        document.addEventListener('mousemove', (e) => mouseMoveEvent(e, posRef, setRotation));
+        document.addEventListener('mousemove', mouseMoveEvent);
     }, [])
 
     return (
@@ -318,7 +324,7 @@ export const Home = () => {
                 </VStack>
             </Flex>
             <Socials/>
-            <MouseEffect/>
+            {isTablet && <MouseEffect/>}
         </Flex>
     )
 }

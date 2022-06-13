@@ -3,20 +3,17 @@ import { Box } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { AppState } from "../../provider/AppProvider";
 
-
 export const AvatarSmiling = ({ rotation }) => {
 
-    const { hovered, isTablet, setIsHovered } = AppState()
+    const { hovered, setIsHovered, isTablet } = AppState()
     const [characterHovered, setCharacterHovered] = useState(false);
 
 return (
-    <Box
-        display={isTablet ? '' : 'none'}
-    >
+    <Box>
     <motion.svg
         xmlns="http://www.w3.org/2000/svg"
-        width="400"
-        height="400"
+        width={isTablet ? '400' : "100"}
+        height={isTablet ? '400' : "100"}
         viewBox="0 0 216.115 300.083"
         onMouseOver={() => {
             setIsHovered(true)

@@ -1,11 +1,11 @@
 import { useMediaQuery } from '@chakra-ui/react';
-import React, { Children, createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
 
-    const [isTablet, isDesktop] = useMediaQuery(['(min-width: 720px)', '(min-width: 1600px)']);
+    const [isTablet, isDesktop] = useMediaQuery(['(min-width: 720px)', '(min-width: 1000px)']);
 
     const [hovered, setHovered] = useState(false);
     const [isHovered, setIsHovered] = useState(false);

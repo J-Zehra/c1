@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { 
     Box, 
     Button,
@@ -36,7 +36,7 @@ export const Contact = () => {
         if(inView){
             setPageInView(3);
         }
-    }, [inView])
+    }, [inView, setPageInView])
 
     // INITIALIZE VARIABLES RELATED TO THE MOUSE MOVEMENT
     const endX = window.innerWidth / 1.5
@@ -53,7 +53,7 @@ export const Contact = () => {
     // KEEP TRACK OF MOUSE MOVE AND THE CURRENT POSITION
     useEffect(() => {
         document.addEventListener('mousemove', mouseMoveEvent);
-    }, [])
+    })
 
     // VARIABLES FOR THE CONTACT
     const [name, setName] = useState();
@@ -196,7 +196,7 @@ export const Contact = () => {
                                 Let's work together.
                             </Text>
                         </Box>
-                        <AvatarHappy rotation={rotation} endX={endX} endY={endY}/>
+                        <AvatarHappy rotation={rotation}/>
                     </Flex>
                     <FormControl
                     >

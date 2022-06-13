@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, Link } from '@chakra-ui/react'
 import { AppState } from '../provider/AppProvider'
 import { motion } from 'framer-motion'
 
@@ -51,18 +51,27 @@ export const Indicator = () => {
                 >
                     {indicator.map((indicator, index) => {
                         return(
-                            <Box
+                            <Link
                                 key={index}
-                                h='.6rem'
-                                w='.6rem'
+                                w='2rem'
+                                h='2rem'
+                                display='flex'
+                                alignItems='center'
+                                justifyContent='center'
                                 borderRadius='50%'
-                                border='1px solid'
-                                borderColor={isDarkMode ? 'appColor.400' : 'appColor.100'}
-                                bg={index == pageInView ? isDarkMode ? 'appColor.400' : 'appColor.100' : ''}
-                                as={motion.a}
                                 href={indicator}
                             >
-                            </Box>
+                                <Box
+                                    cursor='pointer'
+                                    h='.6rem'
+                                    w='.6rem'
+                                    borderRadius='50%'
+                                    border='1px solid'
+                                    borderColor={isDarkMode ? 'appColor.400' : 'appColor.100'}
+                                    bg={index === pageInView ? isDarkMode ? 'appColor.400' : 'appColor.100' : ''}
+                                >
+                                </Box>
+                            </Link>
                         )
                     })}
                 </Flex>
